@@ -1,17 +1,18 @@
-require('dotenv').config();
 const express = require('express');
+const dotenv = require('dotenv');
+const loginRouter = require('./routes/login');
+const weatherRouter = require('./routes/weather');
+
+dotenv.config();
 const app = express();
-const loginhRoutes = require('./routes/login');
-const weatherRoutes = require('./routes/weather');
 
 app.use(express.json());
 
-app.use('/api', loginRoutes);
-app.use('/api', weatherRoutes);
+app.use('/api/login', loginRouter);
+app.use('/api/weather', weatherRouter);
 
 app.use((req, res) => {
-  res.status(404).json({ message: 'Ruta no encontrada' });
+  res.status(404).json({ message: 'Esta ruta no existe' });
 });
 
 module.exports = app;
-

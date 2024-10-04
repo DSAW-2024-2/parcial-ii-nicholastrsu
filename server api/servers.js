@@ -3,12 +3,12 @@ const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const dotenv = require('dotenv');
 
+
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
 const SECRET_KEY = process.env.SECRET_KEY || 'mySecretKey';
 
 
@@ -48,6 +48,7 @@ app.post('/login', (req, res) => {
     res.json({ token, message: 'Login successful!' });
 });
 
+
 app.get('/weather', authenticateToken, async (req, res) => {
     const { latitude, longitude } = req.query;
 
@@ -73,10 +74,4 @@ app.get('/weather', authenticateToken, async (req, res) => {
 });
 
 
-app.use((req, res) => {
-    res.status(404).json({ message: 'Endpoint not found.' });
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+module.exports = app;
